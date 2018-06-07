@@ -11,14 +11,10 @@ for (let i = 0; i < poblacion.length; i++) {
 for (let i = 0; i < poblacion.length; i++) {
     var edad  = poblacion[i];
     if (edad <= 75) {
-        
 
     }else{
         poblacion.splice(i,poblacion.length - i);
-       
     }
     console.log(poblacion);
-
-
 }
 
