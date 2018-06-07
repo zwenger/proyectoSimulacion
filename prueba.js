@@ -14,13 +14,14 @@ poblacion.forEach(persona => {
     if (persona.edad < 75) {
         
     } else {
-        console.log(poblacion.indexOf(persona,1))
+        //console.log(poblacion.indexOf(persona,1))
         poblacion.splice(poblacion.indexOf(persona,1),1);
         
     }
     
-    
+    console.log(persona.edad);
 });
+
 function persona() {
     this.edad = 1;
 

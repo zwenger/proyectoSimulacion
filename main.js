@@ -1,5 +1,5 @@
 var cp = 0;
-var poblacion = [1,1,1,1,1,1,1];
+var array = [1,1,1,1,1,1,1];
 var consumoTotal = 0;
 var capMax = 300000000; // Capacidad maxima del dique en m³
 var capActual = capMax;
@@ -11,7 +11,7 @@ var desviacionCaudal = 172800; // Desviacion del caudal promedio
 var diaFinal = 0; // Dia del juicio final :|
 var año = 1; // Contiene el año del juicio final
 while (dia < 365) {
-    for (let i = 0; i < poblacion.length; i++) {
+    for (let i = 0; i < array.length; i++) {
         var consumo = uniforme(consumoMinXPersona,consumoMaxXPersona) ;
         consumoTotal = consumoTotal + consumo;
     }
@@ -35,9 +35,9 @@ while (dia < 365) {
 }// Fin de la simulacion del Año
 
 //Cuanta gente nacio este año?
-nacimientos = poisson(poblacion.length*1.19);
+nacimientos = poisson(array.length*1.19);
 //Cuantos murieron este año?
-muertes = poisson(poblacion.length*1.068);
+muertes = poisson(array.length*1.068);
 //Las personas mueren :(
 eliminarPersonas(muertes);
 // Y nacen ! :D
@@ -73,5 +73,15 @@ function eliminarPersonas(muertes) {
 
 function agregarPersonas(nacimientos) {
     //escribir funcion que agrega personas
+}
+
+function cumpleaños(array){
+    array.sort();
+
+    for (let i = 0; i < array.length; i++) {
+    var edad  = array[i];
+    array[i] = edad + 1 ;
+
+    }
 }
 
