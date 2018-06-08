@@ -11,7 +11,7 @@ var desviacionCaudal = 172800; // Desviacion del caudal promedio
 var diaFinal = 0; // Dia del juicio final :|
 var año = 1; // Contiene el año del juicio final
 while (cp == 0) {
-    while (dia < 365) {
+    while (dia < 365) {//Inicio simulacion de 1 año dia x dia
         for (let i = 0; i < poblacion.length; i++) {
             var consumo = uniforme(consumoMinXPersona,consumoMaxXPersona) ;
             consumoTotal = consumoTotal + consumo;
@@ -46,55 +46,60 @@ while (cp == 0) {
     
     cumpleaños(poblacion);
     muerteNatural(poblacion);
-}
+    
+}//Fin del while de la condicion de parada cp
 
-
+//Simula y devuelve un valor que sigue una distribucion normal
 function normal(valor,desviacion) {
     var resultado = 0;
     //escribir simulacion normal
     return resultado;
 }
-
+//Simula y devuelve un valor que sigue una distribucion de poisson
 function poisson(valor) {
     var resultado = 0
     //escribir simulacion poisson
     return resultado;
 }
-
+//simula y devuelve un valor que sigue una distribucion uniforme
 function uniforme(min,max) {
     var resultado = 0;
     resultado = min + ((max - min) * Math.random());
     return resultado;
 }
-
+//Elimina del array las personas que murieron ese año
 function eliminarPersonas(muertes) {
     // funcion que elimina personas
     for (let index = 0; index < Math.trunc(muertes); index++) {
         poblacion.splice(Math.trunc(Math.random()*poblacion.length),1);
     }
 }
-
+//Agrega al array las personas que nacieron ese año
 function agregarPersonas(nacimientos) {
     //escribir funcion que agrega personas
+    for (let index = 0; index < Math.trunc(nacimientos); index++) {
+        poblacion.unshift(1);
+        
+    }
 }
-
+// Suma 1 año a cada persona del array
 function cumpleaños(array){
+    //ordeno el array de menor a mayor
     array.sort();
 
     for (let i = 0; i < array.length; i++) {
     var edad  = array[i];
-    array[i] = edad + 1 ;
+    array[i] = edad + 1 ; //Sumo 1 año a cada elemento del array
     }
 }
-
+//muerte natural elimina a las personas con mas de 75 años
 function muerteNatural(array){
     for (let i = 0; i < array.length; i++) {
         var edad  = array[i];
-        if (edad <= 75) {
+        if (edad <= 75) { 
     
         }else{
-            array.splice(i,array.length - i);
-        }
-        console.log(array);
-    }
-}
+            array.splice(i,array.length - i); // Si tiene mas de 75 años 
+        }                                     // mato a ese y a los siguientes
+    }                                         // xq el array esta ordenado
+}   
