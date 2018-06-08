@@ -68,7 +68,10 @@ function uniforme(min,max) {
 }
 
 function eliminarPersonas(muertes) {
-    //escribir funcion que elimina personas
+    // funcion que elimina personas
+    for (let index = 0; index < Math.trunc(muertes); index++) {
+        poblacion.splice(Math.trunc(Math.random()*poblacion.length),1);
+    }
 }
 
 function agregarPersonas(nacimientos) {
