@@ -46,13 +46,17 @@ while (cp == 0) {
     
     cumpleaños(poblacion);
     muerteNatural(poblacion);
-    
+
 }//Fin del while de la condicion de parada cp
 
 //Simula y devuelve un valor que sigue una distribucion normal
-function normal(valor,desviacion) {
+function normal(media,desviacion) {
     var resultado = 0;
-    //escribir simulacion normal
+    var suma = 0;
+    for (let index = 0; index < 12; index++) {
+        suma = suma + Math.random();
+    }
+    resultado = desviacion * ( suma - 6 ) + media
     return resultado;
 }
 //Simula y devuelve un valor que sigue una distribucion de poisson
