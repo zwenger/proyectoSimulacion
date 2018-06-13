@@ -36,9 +36,9 @@ while (cp == 0) {
     }// Fin de la simulacion del Año
     
     //Cuanta gente nacio este año?
-    nacimientos = poisson(poblacion.length*1.19);//corregir
+    nacimientos = poisson(11547);//corregir
     //Cuantos murieron este año?
-    muertes = poisson(poblacion.length*1.068);//corregir
+    muertes = poisson(4419);//corregir
     //Las personas mueren :(
     eliminarPersonas(muertes);
     // Y nacen ! :D
