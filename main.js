@@ -1,15 +1,23 @@
 var cp = 0;
-var poblacion = [1,1,1,1,1,1,1];
+var poblacion = [];
+var cantHabitantes = 5489;
 var consumoTotal = 0;
-var capMax = 300000000; // Capacidad maxima del dique en m³
+var capMax = 3000000; // Capacidad maxima del dique en m³
 var capActual = capMax;
 var consumoMinXPersona = 0.4; // Consumo minimo x persona en m³
 var consumoMaxXPersona = 0.6; // Consumo maximo x persona en m³
 var caudalDiario = 0; // Caudal diario simulado en m³/dia
-var caudal = 6912000; // Caudal promedio en m³/dia
-var desviacionCaudal = 172800; // Desviacion del caudal promedio
+var caudal = 69120; // Caudal promedio en m³/dia
+var desviacionCaudal = 17280; // Desviacion del caudal promedio
+var dia = 0;
 var diaFinal = 0; // Dia del juicio final :|
-var año = 1; // Contiene el año del juicio final
+var año = 2018; // Contiene el año del juicio final
+var añoFinal = 1 ;
+var nacimientos = 0;
+var muertes = 0;
+
+darVida(cantHabitantes);
+
 while (cp == 0) {
     while (dia < 365) {//Inicio simulacion de 1 año dia x dia
         for (let i = 0; i < poblacion.length; i++) {
@@ -20,9 +28,12 @@ while (cp == 0) {
         caudalDiario = normal(caudal,desviacionCaudal);
         
         capActual = capActual + caudalDiario - consumoTotal; // Nivel del dique
+        //console.log(caudalDiario);
+        //console.log(consumoTotal);
     
         if (capActual > capMax) {   
             capActual = capMax;    // Si rebalsa el dique se abren las compuertas
+            //console.log("rebalso");
         }
         if (capActual > consumoTotal) { //Si el dia del juicio no llega, simula otro dia
             dia = dia + 1;  
@@ -30,15 +41,22 @@ while (cp == 0) {
             cp = 1;
             diaFinal = dia;
             dia = 365;
-            año = año - 1;
+            añoFinal = año;
         }
+        
         consumoTotal = 0;
-    }// Fin de la simulacion del Año
+        //Cuanta gente nacio este año?
+        nacimientos = nacimientos + poisson(4);
+        //Cuantos murieron este año?
+        muertes = muertes + poisson(2);
+
+    }// Fin de la simulacion del Año dia x dia 
+    console.log(año);
+    console.log(poblacion.length);
+    console.log(capActual);
     
-    //Cuanta gente nacio este año?
-    nacimientos = poisson(11547);//corregir
-    //Cuantos murieron este año?
-    muertes = poisson(4419);//corregir
+    dia = 0;
+    año = año + 1;
     //Las personas mueren :(
     eliminarPersonas(muertes);
     // Y nacen ! :D
@@ -48,6 +66,9 @@ while (cp == 0) {
     muerteNatural(poblacion);
 
 }//Fin del while de la condicion de parada cp
+
+console.log(añoFinal,diaFinal);
+
 
 //Simula y devuelve un valor que sigue una distribucion normal
 function normal(media,desviacion) {
@@ -60,10 +81,15 @@ function normal(media,desviacion) {
     return resultado;
 }
 //Simula y devuelve un valor que sigue una distribucion de poisson
-function poisson(valor) {
-    var resultado = 0
-    //escribir simulacion poisson
-    return resultado;
+function poisson(alfa) {
+    var x = 0;
+    var b = Math.exp(-alfa);
+    var p = 1;
+    while (p > b){
+    p = p * Math.random();
+    x = x + 1;
+    }
+    return x;
 }
 //simula y devuelve un valor que sigue una distribucion uniforme
 function uniforme(min,max) {
@@ -103,7 +129,14 @@ function muerteNatural(array){
         if (edad <= 75) { 
     
         }else{
-            array.splice(i,array.length - i); // Si tiene mas de 75 años 
+            array.splice(i,1); // Si tiene mas de 75 años 
         }                                     // mato a ese y a los siguientes
     }                                         // xq el array esta ordenado
 }   
+
+function darVida(cantHabitantes){
+    for (let index = 0; index < cantHabitantes; index++) {
+        poblacion.unshift(35);
+    }
+
+}
