@@ -2,10 +2,10 @@ var cp = 0;
 var poblacion = [];
 var cantHabitantes = 5489;
 var consumoTotal = 0;
-var capMax = 3000000; // Capacidad maxima del dique en m³
+var capMax = 2000000; // Capacidad maxima del dique en m³
 var capActual = capMax;
-var consumoMinXPersona = 0.4; // Consumo minimo x persona en m³
-var consumoMaxXPersona = 0.6; // Consumo maximo x persona en m³
+var consumoMinXPersona = 0.6; // Consumo minimo x persona en m³
+var consumoMaxXPersona = 0.8; // Consumo maximo x persona en m³
 var caudalDiario = 0; // Caudal diario simulado en m³/dia
 var caudal = 69120; // Caudal promedio en m³/dia
 var desviacionCaudal = 17280; // Desviacion del caudal promedio
@@ -45,10 +45,7 @@ while (cp == 0) {
         }
         
         consumoTotal = 0;
-        //Cuanta gente nacio este año?
-        nacimientos = nacimientos + poisson(4);
-        //Cuantos murieron este año?
-        muertes = muertes + poisson(2);
+        
 
     }// Fin de la simulacion del Año dia x dia 
     console.log(año);
@@ -57,6 +54,10 @@ while (cp == 0) {
     
     dia = 0;
     año = año + 1;
+    //Cuanta gente nacio este año?
+    nacimientos = poisson(115);
+    //Cuantos murieron este año?
+    muertes = poisson(44);
     //Las personas mueren :(
     eliminarPersonas(muertes);
     // Y nacen ! :D
