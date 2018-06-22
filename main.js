@@ -15,6 +15,9 @@ var año = 2018; // Contiene el año del juicio final
 var añoFinal = 1 ;
 var nacimientos = 0;
 var muertes = 0;
+var tuplaDique = [['Año','Nivel']] ;
+var tuplaPob = [['Año','Poblacion']] ;
+
 
 darVida(cantHabitantes);
 
@@ -59,6 +62,8 @@ while (cp == 0) {
         
 
     }// Fin de la simulacion del Año dia x dia 
+    datosGraficoDique(año,capActual);
+    datosGraficoPob(año,poblacion.length);
     console.log(año);
     console.log(poblacion.length);
     console.log(capActual);
@@ -77,7 +82,8 @@ while (cp == 0) {
 }//Fin del while de la condicion de parada cp
 
 console.log(añoFinal,diaFinal);
-
+drawChart();
+drawChartPob();
 
 //Simula y devuelve un valor que sigue una distribucion normal
 function normal(media,desviacion) {
@@ -148,4 +154,26 @@ function darVida(cantHabitantes){
         poblacion.unshift(35);
     }
 
+}
+
+
+
+function datosGraficoDique(año,capActual){
+    var arrayComponente = [] ;    
+
+    arrayComponente.push(año);
+    arrayComponente.push(capActual);
+
+   tuplaDique.push(arrayComponente);
+   
+}
+
+function datosGraficoPob(año,pob){
+    var arrayComponente2 = [] ;    
+
+    arrayComponente2.push(año);
+    arrayComponente2.push(pob);
+
+   tuplaPob.push(arrayComponente2);
+   
 }
