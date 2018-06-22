@@ -9,6 +9,7 @@ function drawChartPob() {
     displayExactValues: true,
     hAxis: { format:'decimal' },
     vAxis: { format:'decimal' },
+    colors: ['#1b9e77'],
   };
 
   var chart = new google.charts.Bar(document.getElementById('columnchartPob'));

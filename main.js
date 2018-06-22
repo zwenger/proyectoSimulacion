@@ -11,18 +11,22 @@ var caudal = 69120; // Caudal promedio en m³/dia
 var desviacionCaudal = 17280; // Desviacion del caudal promedio
 var dia = 0;
 var diaFinal = 0; // Dia del juicio final :|
-var año = 2018; // Contiene el año del juicio final
-var añoFinal = 1 ;
+var año = 2018; 
+var añoFinal = 1 ; // Contiene el año del juicio final
 var nacimientos = 0;
 var muertes = 0;
-var tuplaDique = [['Año','Nivel']] ;
+var tuplaDique = [['Año','Nivel [Litros]']] ;
 var tuplaPob = [['Año','Poblacion']] ;
+var nacAño = 0;
+var mueAño = 0;
 
+function main() {
+    
 
-darVida(cantHabitantes);
+    darVida(cantHabitantes);
 
-while (cp == 0) {
-    while (dia < 365) {//Inicio simulacion de 1 año dia x dia
+    while (cp == 0) {
+        while (dia < 365) { //Inicio simulacion de 1 año dia x dia
         for (let i = 0; i < poblacion.length; i++) {
             var consumo = uniforme(consumoMinXPersona,consumoMaxXPersona) ;
             consumoTotal = consumoTotal + consumo;
@@ -79,11 +83,15 @@ while (cp == 0) {
     cumpleaños(poblacion);
     muerteNatural(poblacion);
 
-}//Fin del while de la condicion de parada cp
+    }//Fin del while de la condicion de parada cp
+    console.log(añoFinal,diaFinal);
+    drawChart();
+    drawChartPob();
 
-console.log(añoFinal,diaFinal);
-drawChart();
-drawChartPob();
+}
+
+
+
 
 //Simula y devuelve un valor que sigue una distribucion normal
 function normal(media,desviacion) {
@@ -176,4 +184,18 @@ function datosGraficoPob(año,pob){
 
    tuplaPob.push(arrayComponente2);
    
+}
+
+function getData() {
+    cantHabitantes = document.getElementById("cantHabitantes").value / 100;
+    nacAño = document.getElementById("nacAño").value / 100;
+    mueAño = document.getElementById("mueAño").value / 100;
+    capMax = document.getElementById("capMax").value / 100;
+    capActual = capMax;
+    consumoMinXPersona = document.getElementById("consumoMinXPersona").value / 1000;
+    consumoMaxXPersona = document.getElementById("consumoMaxXPersona").value / 1000;
+    caudal = document.getElementById("caudal").value / 100;
+    desviacionCaudal = document.getElementById("desviacionCaudal").value / 100;
+    //console.log(cantHabitantes,nacAño,mueAño,capMax,consumoMinXPersona,consumoMaxXPersona,caudal,desviacionCaudal)
+   main();
 }
