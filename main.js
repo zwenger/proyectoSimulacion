@@ -19,6 +19,7 @@ var tuplaDique = [['Año','Nivel [Litros]']] ;
 var tuplaPob = [['Año','Poblacion']] ;
 var nacAño = 0;
 var mueAño = 0;
+var i = 0;
 
 function main() {
     
@@ -57,6 +58,7 @@ function main() {
             dia = 365;
             añoFinal = año;
         }
+        
         
         consumoTotal = 0;
         //Cuanta gente nacio este año?
@@ -167,10 +169,11 @@ function darVida(cantHabitantes){
 
 
 function datosGraficoDique(año,capActual){
-    var arrayComponente = [] ;    
+    var arrayComponente = [] ; 
+    i = i + 1;   
 
     arrayComponente.push(año);
-    arrayComponente.push(capActual);
+    arrayComponente.push((capActual));
 
    tuplaDique.push(arrayComponente);
    
