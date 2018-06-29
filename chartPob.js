@@ -1,4 +1,4 @@
-google.charts.setOnLoadCallback(drawChartPob);
+//google.charts.setOnLoadCallback(drawChartPob);
 
 function drawChartPob() {
   var data = google.visualization.arrayToDataTable(tuplaPob);
