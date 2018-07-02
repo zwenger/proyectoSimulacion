@@ -202,3 +202,28 @@ function getData() {
     //console.log(cantHabitantes,nacAño,mueAño,capMax,consumoMinXPersona,consumoMaxXPersona,caudal,desviacionCaudal)
    main();
 }
+function truncarNumeros(numero, inicio, fin){
+    var string = String(numero).substring(inicio, (inicio+fin));
+    return string;
+  }
+  
+  function elegirSemilla(){
+    var probSemilla = Date.now();
+    probSemilla = truncarNumeros(probSemilla, 7, 13);
+    while(probSemilla % 2 == 0 || probSemilla % 5 == 0){
+      probSemilla = 2*(probSemilla^2) - 1;
+    }
+    return probSemilla;
+  }
+//Metodo congruencial multiplicativo
+  function random(){
+    var a, no, n, m;
+    
+    a = 5631;
+    no = elegirSemilla();
+    m = 547;
+      n = (a*no) % m;
+      no = n;
+      x = n/m;
+    return x;
+  }
