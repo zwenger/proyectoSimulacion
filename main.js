@@ -1,25 +1,26 @@
-var cp = 0;
-var poblacion = [];
-var cantHabitantes = 5489;
-var consumoTotal = 0;
-var capMax = 3000000; // Capacidad maxima del dique en m³
-var capActual = capMax;
-var consumoMinXPersona = 0.6; // Consumo minimo x persona en m³
-var consumoMaxXPersona = 0.8; // Consumo maximo x persona en m³
+var cp = 0; // Bandera que se activa al quedarse sin agua el dique
+var poblacion = []; // Array donde se guardan las edades de los habitantes
+var cantHabitantes = 0; // Cantidad de habitantes en la region 548.866 segun censo
+var consumoTotal = 0; // Consumo total diario de la region expresado en m^3
+var capMax = 0; // Capacidad maxima del dique en m³ 300.000.000
+var capActual = capMax; // Nivel actual del dique expresado en m^3
+var consumoMinXPersona = 0; // Consumo minimo diario x persona en m³ 0.6
+var consumoMaxXPersona = 0; // Consumo maximo diario x persona en m³ 0.8
 var caudalDiario = 0; // Caudal diario simulado en m³/dia
-var caudal = 69120; // Caudal promedio en m³/dia
-var desviacionCaudal = 17280; // Desviacion del caudal promedio
-var dia = 0;
+var caudal = 0; // Caudal promedio en m³/dia 6.912.000
+var desviacionCaudal = 0; // Desviacion del caudal promedio 1.728.000
+var dia = 0; // Dia de simulacion
 var diaFinal = 0; // Dia del juicio final :|
-var año = 2018; 
+var año = 2018; // Año de inicio de la simulacion
 var añoFinal = 1 ; // Contiene el año del juicio final
-var nacimientos = 0;
-var muertes = 0;
-var tuplaDique = [['Año','Nivel [Litros]']] ;
-var tuplaPob = [['Año','Poblacion']] ;
-var nacAño = 0;
-var mueAño = 0;
+var nacimientos = 0; // Acumulador de nacimientos por año
+var muertes = 0; // Acumulador de muertes por año
+var tuplaDique = [['Año','Nivel [Litros]']] ; // Variable utilizada para graficar 
+var tuplaPob = [['Año','Poblacion']] ; // Variable utilizada para graficar 
+var nacAño = 0; // Nacimientos por año en la region 104.284
+var mueAño = 0; // Muertes por año en la region 37.322
 var i = 0;
+
 
 function main() {
     
@@ -32,27 +33,20 @@ function main() {
             var consumo = uniforme(consumoMinXPersona,consumoMaxXPersona) ;
             consumoTotal = consumoTotal + consumo;
         }
-       // console.log(consumoTotal);
+       
     
-        caudalDiario = normal(caudal,desviacionCaudal);
-
-        if (Math.random()<= 0.6) {
-            
-        } else {
-            caudalDiario = 0;
-        }
+        caudalDiario = normal(caudal,desviacionCaudal); // Simulacion normal del caudal diario del dique
         
         capActual = capActual + caudalDiario - consumoTotal; // Nivel del dique
-        //console.log(caudalDiario);
-        //console.log(consumoTotal);
+        
     
         if (capActual > capMax) {   
             capActual = capMax;    // Si rebalsa el dique se abren las compuertas
-            //console.log("rebalso");
+            
         }
         if (capActual > consumoTotal) { //Si el dia del juicio no llega, simula otro dia
             dia = dia + 1;  
-        } else {        // Si ese dia llega sale emigrar a Noruega            
+        } else {        // Si ese dia llega nos quedamos sin agua          
             cp = 1;
             diaFinal = dia;
             dia = 365;
@@ -62,14 +56,14 @@ function main() {
         
         consumoTotal = 0;
         //Cuanta gente nacio este año?
-        nacimientos = nacimientos + poisson(2);
+        nacimientos = nacimientos + poisson(Math.trunc(nacAño));
         //Cuantos murieron este año?
-        muertes = muertes + poisson(1.5);
+        muertes = muertes + poisson(Math.trunc(mueAño));
         
 
     }// Fin de la simulacion del Año dia x dia 
-    datosGraficoDique(año,capActual);
-    datosGraficoPob(año,poblacion.length);
+    datosGraficoDique(año,capActual*100);
+    datosGraficoPob(año,poblacion.length*100);
     console.log(año);
     console.log(poblacion.length);
     console.log(capActual);
@@ -77,9 +71,9 @@ function main() {
     dia = 0;
     año = año + 1;
     
-    //Las personas mueren :(
+    //Las personas mueren 
     eliminarPersonas(muertes);
-    // Y nacen ! :D
+    // Y nacen 
     agregarPersonas(nacimientos);
     
     cumpleaños(poblacion);
@@ -100,7 +94,7 @@ function normal(media,desviacion) {
     var resultado = 0;
     var suma = 0;
     for (let index = 0; index < 12; index++) {
-        suma = suma + Math.random();
+        suma = suma + Math.random();  //Math.random()
     }
     resultado = desviacion * ( suma - 6 ) + media
     return resultado;
@@ -111,7 +105,7 @@ function poisson(alfa) {
     var b = Math.exp(-alfa);
     var p = 1;
     while (p > b){
-    p = p * Math.random();
+    p = p * Math.random(); //Math.random()
     x = x + 1;
     }
     return x;
@@ -119,7 +113,7 @@ function poisson(alfa) {
 //simula y devuelve un valor que sigue una distribucion uniforme
 function uniforme(min,max) {
     var resultado = 0;
-    resultado = min + ((max - min) * Math.random());
+    resultado = min + ((max - min) * Math.random()); //Math.random()
     return resultado;
 }
 //Elimina del array las personas que murieron ese año
@@ -158,7 +152,7 @@ function muerteNatural(array){
         }                                     // mato a ese y a los siguientes
     }                                         // xq el array esta ordenado
 }   
-
+//Carga el array de poblacion con las edades iniciales
 function darVida(cantHabitantes){
     for (let index = 0; index < cantHabitantes; index++) {
         poblacion.unshift(35);
@@ -166,8 +160,36 @@ function darVida(cantHabitantes){
 
 }
 
+//Trunca los numeros enormes devueltos por el reloj del cpu
+function truncarNumeros(numero, inicio, fin){
+    var string = String(numero).substring(inicio, (inicio+fin));
+    return string;
+  }
 
+//Elige la semilla para el metodo congruencial con el reloj del procesador y la adecua para que cualquier
+// entero para no divisible entre 5  
+function elegirSemilla(){
+    var probSemilla = Date.now();
+    probSemilla = truncarNumeros(probSemilla, 7, 13);
+    while(probSemilla % 2 == 0 || probSemilla % 5 == 0){
+      probSemilla = 2*(probSemilla^2) - 1;
+    }
+    return probSemilla;
+  }
 
+//Metodo congruencial multiplicativo
+function conguencial(){
+    var a, no, n, m;
+    
+    a = 5631; // Constante
+    no = elegirSemilla(); // Semilla
+    m = 547; // Modulo 
+      n = (a*no) % m;
+      no = n;
+      x = n/m;
+    return x;
+  }
+  
 function datosGraficoDique(año,capActual){
     var arrayComponente = [] ; 
     i = i + 1;   
@@ -188,11 +210,13 @@ function datosGraficoPob(año,pob){
    tuplaPob.push(arrayComponente2);
    
 }
-
-function getData() {
+  
+  
+  
+  function getData() {
     cantHabitantes = document.getElementById("cantHabitantes").value / 100;
-    nacAño = document.getElementById("nacAño").value / 100;
-    mueAño = document.getElementById("mueAño").value / 100;
+    nacAño = document.getElementById("nacAño").value / 36500;
+    mueAño = document.getElementById("mueAño").value / 36500;
     capMax = document.getElementById("capMax").value / 100;
     capActual = capMax;
     consumoMinXPersona = document.getElementById("consumoMinXPersona").value / 1000;
@@ -202,28 +226,3 @@ function getData() {
     //console.log(cantHabitantes,nacAño,mueAño,capMax,consumoMinXPersona,consumoMaxXPersona,caudal,desviacionCaudal)
    main();
 }
-function truncarNumeros(numero, inicio, fin){
-    var string = String(numero).substring(inicio, (inicio+fin));
-    return string;
-  }
-  
-  function elegirSemilla(){
-    var probSemilla = Date.now();
-    probSemilla = truncarNumeros(probSemilla, 7, 13);
-    while(probSemilla % 2 == 0 || probSemilla % 5 == 0){
-      probSemilla = 2*(probSemilla^2) - 1;
-    }
-    return probSemilla;
-  }
-//Metodo congruencial multiplicativo
-  function random(){
-    var a, no, n, m;
-    
-    a = 5631;
-    no = elegirSemilla();
-    m = 547;
-      n = (a*no) % m;
-      no = n;
-      x = n/m;
-    return x;
-  }
